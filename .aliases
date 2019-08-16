@@ -143,3 +143,8 @@ alias reload="exec ${SHELL} -l"
 
 # Print each PATH entry on a separate line
 alias path='echo -e ${PATH//:/\\n}'
+
+# Make ML paper notes from heading for https://github.com/subburamr/machinelearning-papernotes
+# usage:
+	# $ echo "Deep Active Learning for Named Entity Recognition.md" | mlnote
+alias mlnote='tr "[:upper:]" "[:lower:]"|tr " " "_"'
