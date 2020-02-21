@@ -8,11 +8,6 @@ git config --global user.name "$GIT_AUTHOR_NAME"
 git config --global --add user.useConfigOnly true
 git config --global --unset-all user.email
 
-### Siemens specific Proxy setting
-export http_proxy=http://194.138.0.4:9400
-export https_proxy=http://194.138.0.4:9400
-export all_proxy=http://194.138.0.4:9400
-
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/Users/z003r9pb/workspace/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
@@ -28,6 +23,26 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+# correct previous command using fuck
+eval $(thefuck --alias)
+
+# Activate direnv while entering dir. Add config to .envrc in the directory
+eval "$(direnv hook bash)"
+
+# direnv does not change PS1 by default https://github.com/direnv/direnv/wiki/PS1 
+show_virtual_env() {
+  if [[ -n "$CONDA_DEFAULT_ENV" && -n "$DIRENV_DIR" ]]; then
+    echo "($(basename $CONDA_DEFAULT_ENV))"
+  fi
+}
+export -f show_virtual_env
+PS1='$(show_virtual_env)'$PS1
 
 # Add below to every repo
-# git config --local --add user.email subburam.rb@gmail.com
+# git config --local --add user.email steve@collectiveidea.com
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/z003r9pb/workspace/development/siemens_gitlab/theia/google-cloud-sdk/path.bash.inc' ]; then . '/Users/z003r9pb/workspace/development/siemens_gitlab/theia/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/z003r9pb/workspace/development/siemens_gitlab/theia/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/z003r9pb/workspace/development/siemens_gitlab/theia/google-cloud-sdk/completion.bash.inc'; fi

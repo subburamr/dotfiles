@@ -5,6 +5,11 @@ function mkd() {
 	mkdir -p "$@" && cd "$_";
 }
 
+function mkgit() {
+	mkdir -p "$@" && cd "$_" && cp ~/dotfiles/.envrc .;
+}
+
+
 # Change working directory to the top-most Finder window location
 function cdf() { # short for `cdfinder`
 	cd "$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')";
@@ -111,4 +116,24 @@ function o() {
 # small enough for one screen.
 function tre() {
 	tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
+}
+
+
+### from https://gist.github.com/xiongchiamiov/b0ef0251813625307371d0e11e131759
+function decode-authorization-failure-message {
+    if [ $# -ne 1 ] || [ "$1" = -h ] || [ "$1" = --help ]; then
+        cat <<'EOT'
+Usage: decode-authorization-failure-message <message>
+Use this when Amazon gives you an "Encoded authorization failure message" and
+you need to turn it into something readable.
+EOT
+        return 1
+    fi
+
+    aws --profile=468513585038_468513585038-MIRG_Developer sts decode-authorization-message --encoded-message "$1" |
+        jq '.["DecodedMessage"]' |
+        sed 's/\\"/"/g' |
+        sed 's/^"//' |
+        sed 's/"$//' |
+        jq
 }
